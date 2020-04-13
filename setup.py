@@ -11,7 +11,7 @@ setuptools.setup(
     description="A simple progress bar with lots of customization \(^-^)/",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://gitlab.com/dariush-bahrami/klondbar_project.git",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
