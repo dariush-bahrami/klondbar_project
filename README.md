@@ -59,4 +59,4 @@ Here's the output:
 
 ![alt text][logo]
 
-[logo]: https://github.com/dariush-bahrami/klondbar_project/raw/master/output%20example.png
+[logo]: https://try.gitea.io/dariush-bahrami/klondbar_project/raw/branch/master/output%20example.png
