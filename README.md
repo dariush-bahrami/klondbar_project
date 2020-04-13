@@ -3,14 +3,14 @@
 
 ## what is klondbar?
 klondbar is a simple progress bar with lots of customizations!
-here is some of this customizable features:
-*adding header to progress bar
-*changing bar width
-*changing progress steps
-*adding a footnote
-*changing the color of progress bar
-beside this fun customizations, KlondBar react to you by some funy ASCII emojies like this: \(^-^)/
-pass your expected time as an argument and see. if calculations take longer then KlondBar show you it's angry face.
+here are some of this customizable features:
+* adding header to progress bar
+* changing bar width
+* changing progress steps
+* adding a footnote
+* changing the color of progress bar
+
+*Beside these fun customizations, KlondBar also reacts with some funny ASCII emojis like this: \\(^-^)/ Pass your expected time as an argument and if calculations take longer than that, KlondBar will show it's angry face to you!*
 
 ## how to install klondbar?
 use pip like any other package:
