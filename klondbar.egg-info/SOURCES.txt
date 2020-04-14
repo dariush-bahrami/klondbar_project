@@ -6,4 +6,5 @@ klondbar/klondbar_module.py
 klondbar.egg-info/PKG-INFO
 klondbar.egg-info/SOURCES.txt
 klondbar.egg-info/dependency_links.txt
+klondbar.egg-info/requires.txt
 klondbar.egg-info/top_level.txt

@@ -37,7 +37,7 @@ class KlondBar:
         assert bar_width%steps_number == 0, 'invalid entry, steps_number should divide bar_width'
         # Importing a function which returns random emoji arts for
         # header of progress bar
-        from klond_art_module import klond_random_emoji as art
+        from klondbar.klond_art_module import klond_random_emoji as art
         from termcolor import colored
 
         # Assigning basic attributes

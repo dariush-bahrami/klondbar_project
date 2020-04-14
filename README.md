@@ -57,6 +57,6 @@ kwargs:
 
 Here's the output:
 
-![alt text][logo]
+![Output Screenshot][logo]
 
 [logo]: https://gitlab.com/dariush-bahrami/klondbar_project/-/raw/master/output%20example.png?inline=false

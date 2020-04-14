@@ -1,16 +1,23 @@
 '''Klond Art Module; Coded by dAriush'''
 
+emojis = [
+              '\m/_(>_<)_\m/',
+              '\m/ (>.<) \m/',              
+              '\,,/(^_^)\,,/',
+              '\(^-^)/',
+              '( 0 _ 0 )',
+              'd[-_-]b',
+              '<(^_^)>',
+              '¯\(°_o)/¯',
+              '[¬º-°]¬',
+              '(V) (°,,,,°) (V)]',
+              ]
 
 def klond_random_emoji():
     '''returning random emoji from emoji collection "klond_art_emojis.txt"'''
     from random import randint
 
-    # Reading emoji collection file
-    with open('klond_art_emojis.txt', mode='r', encoding='utf-8') as file:
-        emojis = file.readlines()
-
-    random_emoji = emojis[randint(0, len(emojis) - 1)].strip()
-    # By using strip() methode the new line character which is "\n" was trimmed
+    random_emoji = emojis[randint(0, len(emojis) - 1)]
 
     return random_emoji
 

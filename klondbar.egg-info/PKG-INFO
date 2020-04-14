@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: klondbar
-Version: 0.0.1
+Version: 0.0.6
 Summary: A simple progress bar with lots of customization \(^-^)/
 Home-page: https://gitlab.com/dariush-bahrami/klondbar_project.git
 Author: dAriush Bahrami
@@ -65,7 +65,7 @@ Description: # KlondBar \m/_(>_<)_\m/
         
         Here's the output:
         
-        ![alt text][logo]
+        ![Output Screenshot][logo]
         
         [logo]: https://gitlab.com/dariush-bahrami/klondbar_project/-/raw/master/output%20example.png?inline=false
         
