@@ -6,16 +6,16 @@
 class KlondBar:
     ''' dAriush progress bar class
     '''
-    # Except iteration_list, all arguments are optional
-    def __init__ (self, iteration_list, task_name='', bar_width=80,
+    # Except iterable_object, all arguments are optional
+    def __init__ (self, iterable_object, task_name='', bar_width=80,
                   steps_number=80, footnote='', expected_time = 20,
                   color='grey'):
         '''__init__ KlondBar class constructor
 
         Parameters
         ----------
-        iteration_list : list
-            this is same list that will be used in for loop
+        iterable_object : like list, tuple, strings
+            this is same iterable object that will be used in for loop
         task_name : str, optional
             progress title, by default ''
         bar_width : int, optional
@@ -42,8 +42,8 @@ class KlondBar:
 
         # Assigning basic attributes
         self.color = color
-        self.list = iteration_list
-        self.iterations_number = len(iteration_list)
+        self.iterable_object = iterable_object
+        self.iterations_number = len(iterable_object)
         self.task_name = task_name
         self.bar_width = bar_width
         self.steps_number = steps_number
@@ -51,11 +51,11 @@ class KlondBar:
 
         # progress data calculation
         #
-        # KlondBar need a list of desired values in iteration_list to
+        # KlondBar need a list of desired values in iterable_object to
         # excute a progress step; this list defined as progress_points
 
         self.progress_points = [j*(1 / self.steps_number)
-                                *int(len(iteration_list))
+                                *int(len(iterable_object))
                                 for j in range(1, self.steps_number)]
 
         # The elapsed_steps attribute is a counter for passed steps
@@ -84,7 +84,7 @@ class KlondBar:
         top_box = '▄'*self.bar_width + '\n'
         self.header = colored(f'{top_box}▌{emoji}{title}▐', self.color,
                               attrs=['bold', 'underline'])
-        self.footnote = footnote
+        self.footnote = footnote + '\n'
 
     def start(self):
         '''start This method should be placed just before for block
@@ -165,16 +165,28 @@ class KlondBar:
 
 ## Debug section
 if __name__ == '__main__':
-    # KlondBar object construction; test_bar is an instance of KlondBar class
-    end_of_range = int(1000)
-    test_bar = KlondBar(range(end_of_range), task_name='lostham',
-                        bar_width = 80, footnote='fandogh',
+    # First construct an iterable_object for using in "for loop"
+    iterable_object = range(500000)
+
+    # KlondBar object construction
+    # test_bar is an instance of KlondBar class
+    test_bar = KlondBar(iterable_object, task_name='task title',
+                        bar_width = 80, footnote='footnote',
                         steps_number = 80, color='cyan')
 
-    print('before start method')
+    print('before start')
+
+    # Place start method before "for loop"; don't pass any argument to it
     test_bar.start()
-    for i in range(end_of_range):
+    for i in iterable_object:
+        # Place midle method after "for loop" definition,
+        # pass "for loop" iterator to midle method. like this:
         test_bar.midle(i)
-        i**i
+
+        # place your calculations here
+        i**200
+    
+    # Place end method after "for loop" block, don't pass any argument to it
     test_bar.end()
-    print('after end method')
+
+    print('after end')
