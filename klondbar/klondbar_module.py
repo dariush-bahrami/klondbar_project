@@ -39,6 +39,8 @@ class KlondBar:
         # header of progress bar
         from klondbar.klond_art_module import klond_random_emoji as art
         from termcolor import colored
+		from colorama import init
+		init()
 
         # Assigning basic attributes
         self.color = color
@@ -92,6 +94,8 @@ class KlondBar:
 
         from timeit import default_timer as timer
         from termcolor import colored
+		from colorama import init
+		init()
 
         self.start_time = timer()
         print(f'\n{self.header}')
@@ -106,6 +110,8 @@ class KlondBar:
         '''
 
         from termcolor import colored
+		from colorama import init
+		init()
 
         # in folowing if block program determines when to pass one step
         if i in self.progress_points:
@@ -120,6 +126,8 @@ class KlondBar:
 
         from timeit import default_timer as timer
         from termcolor import colored
+		from colorama import init
+		init()
 
         self.stop_time = timer()
         self.elapsed_time = self.stop_time - self.start_time
