@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="klondbar",
-    version="0.0.7",
+    version="0.0.8",
     author="dAriush Bahrami",
     author_email="dariush.bahrami@ut.ac.ir",
     description="A simple progress bar with lots of customization \(^-^)/",
@@ -19,5 +19,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    install_requires=['termcolor']
+    install_requires=['termcolor', 'colorama']
 )
