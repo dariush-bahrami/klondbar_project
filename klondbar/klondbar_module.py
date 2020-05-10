@@ -1,5 +1,5 @@
 ''' Klond Bar is python module which can be used to create fun progress bar
-    objects by using only ASCII characters; doed by dAriush
+    objects by using only ASCII characters; coded by dAriush
 '''
 
 
@@ -39,8 +39,8 @@ class KlondBar:
         # header of progress bar
         from klondbar.klond_art_module import klond_random_emoji as art
         from termcolor import colored
-		from colorama import init
-		init()
+        from colorama import init
+        init()
 
         # Assigning basic attributes
         self.color = color
@@ -94,8 +94,6 @@ class KlondBar:
 
         from timeit import default_timer as timer
         from termcolor import colored
-		from colorama import init
-		init()
 
         self.start_time = timer()
         print(f'\n{self.header}')
@@ -110,8 +108,6 @@ class KlondBar:
         '''
 
         from termcolor import colored
-		from colorama import init
-		init()
 
         # in folowing if block program determines when to pass one step
         if i in self.progress_points:
@@ -126,8 +122,6 @@ class KlondBar:
 
         from timeit import default_timer as timer
         from termcolor import colored
-		from colorama import init
-		init()
 
         self.stop_time = timer()
         self.elapsed_time = self.stop_time - self.start_time
@@ -174,7 +168,7 @@ class KlondBar:
 ## Debug section
 if __name__ == '__main__':
     # First construct an iterable_object for using in "for loop"
-    iterable_object = range(500000)
+    iterable_object = range(5000)
 
     # KlondBar object construction
     # test_bar is an instance of KlondBar class
@@ -193,7 +187,7 @@ if __name__ == '__main__':
 
         # place your calculations here
         i**200
-    
+
     # Place end method after "for loop" block, don't pass any argument to it
     test_bar.end()
 
