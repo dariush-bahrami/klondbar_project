@@ -194,9 +194,11 @@ def mega_bar(iterable_object, title='', bar_width=40, color=None):
     items in iterable_objects
         a generator which returns items in iterable_objects
     """
-    bar = MegaBar(iterable_object, task_name=title,
-                  bar_width=bar_width)
     if color != None:
-        bar.colored_bar = True
+        bar = MegaBar(iterable_object, task_name=title,
+                    bar_width=bar_width, colored_bar=True)
         bar.color = color
+    else:
+        bar = MegaBar(iterable_object, task_name=title,
+                    bar_width=bar_width)
     return bar.run()
