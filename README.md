@@ -2,74 +2,64 @@
 *coded by dAriush* 
 
 ## what is klondbar?
-klondbar is a simple progress bar with lots of customizations!
+klondbar is a simple progress bar package with lots of customizations!
 here are some of this customizable features:
+
 * adding header to progress bar
 * changing bar width
-* changing progress steps
-* adding a footnote
 * changing the color of progress bar
-
-*Beside these fun customizations, KlondBar also reacts with some funny ASCII emojis like this: \\(^-^)/ Pass your expected time as an argument and if calculations take longer than that, KlondBar will show it's angry face to you!*
 
 ## how to install klondbar?
 use pip like any other package:
 
     pip install klondbar
-
-    or: python3 -m pip install klondbar
     
+    or: python3 -m pip install klondbar
 
 ## How to use:
 
-    progress_bar = KlondBar(*args, **kwargs)
-    
-args:
- * iterable_object
+at this version of klondbar there is two different types of progress bar available:
 
-kwargs:
-* task_name=''
-* bar_width=80
-* steps_number=80
-* footnote=''
-* expected_time = 20
-* color='grey'
+1. Mega Bar
+2. Micro Bar
 
-*this is a sample code:*
+### Fast Usage Guide
 
-    from klondbar.klondbar_module import KlondBar
-    
-    # First construct an iterable_object for using in "for loop"
-    iterable_object = range(500000)
+*Just wrap for loop sequence with **micro_bar()** or **mega_bar()***
 
-    # KlondBar object construction
-    # test_bar is an instance of KlondBar class
-    test_bar = KlondBar(iterable_object, task_name='task title',
-                        bar_width = 80, footnote='footnote',
-                        steps_number = 80, color='cyan')
+**mega_bar Fast Usage Sample Code:**
 
-    print('before start')
+```python
+from klondbar.megabar import mega_bar
+import time
+for i in mega_bar(range(10)):
+    # place your calculations here
+    time.sleep(0.1)  # just an exapmle of calculations
+```
 
-    # Place start method before "for loop"; don't pass any argument to it
-    test_bar.start()
-    for i in iterable_object:
-        # Place midle method after "for loop" definition,
-        # pass "for loop" iterator to midle method. like this:
-        test_bar.midle(i)
+Here's example of mega_bar output:
 
-        # place your calculations here
-        i**200
-    
-    # Place end method after "for loop" block, don't pass any argument to it
-    test_bar.end()
+![megabar_output](https://gitlab.com/dariush-bahrami/klondbar_project/-/raw/master/megabar_output%20example.png?inline=false)
 
-    print('after end')
 
-Here's the output:
 
-![Output Screenshot][logo]
+**micro_bar Fast Usage Sample Code:**
 
-[logo]: https://gitlab.com/dariush-bahrami/klondbar_project/-/raw/master/output%20example.png?inline=false
+```python
+from klondbar.microbar import micro_bar
+import time
+for i in micro_bar(range(10)):
+    # place your calculations here
+    time.sleep(0.1)  # just an exapmle of calculations
+```
+
+Here's example of micro_bar output:
+
+![micro_bar output](https://gitlab.com/dariush-bahrami/klondbar_project/-/raw/master/microbar_output%20example.png?inline=false)
+
+**for more usage guide use following jupyter notebook:**
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dariush-bahrami/klondbar_project/blob/master/klondbar_guide.ipynb)
 
 ## More information
 
