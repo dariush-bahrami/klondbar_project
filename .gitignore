@@ -3,3 +3,5 @@
 **/dist
 **/klondbar.egg-info
 **/tests
+**/__pycache__
+test.py
