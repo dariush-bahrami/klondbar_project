@@ -3,7 +3,7 @@
 '''
 
 
-class ColoredMegaBar:
+class MegaBar:
     ''' dAriush progress bar class
     '''
 
@@ -12,10 +12,8 @@ class ColoredMegaBar:
                  iterable_object,
                  task_name='',
                  bar_width=80,
-                 steps_number=80,
-                 footnote='',
                  expected_time=20,
-                 color='grey'):
+                 colored_bar=False):
         '''__init__ KlondBar class constructor
 
         Parameters
@@ -40,10 +38,10 @@ class ColoredMegaBar:
         # Preparing requirements
         #
         # Checking steps_number validity; steps_number should divide bar_width
-        assert bar_width % steps_number == 0, 'invalid entry, steps_number should divide bar_width'
+        # assert bar_width % steps_number == 0, 'invalid entry, steps_number should divide bar_width'
         # Importing a function which returns random emoji arts for
         # header of progress bar
-        import os        
+        import os
         self.colors = {
             'BLACK': '\033[30m',
             'RED': '\033[31m',
@@ -66,19 +64,22 @@ class ColoredMegaBar:
             '<(^_^)>',
             '¯\(°_o)/¯',
             '[¬º-°]¬',
-            '(V) (°,,,,°) (V)]',
         ]
 
+        self.colored_bar = colored_bar
+        if self.colored_bar:
+            self._color = 'WHITE'
+            os.system("")  # allows you to print ANSI codes in the Terminal
+            print(self.colors[self.color], end="", flush=True)
+
         # Assigning basic attributes
-        self.color = color.upper()
-        os.system("")  # allows you to print ANSI codes in the Terminal
-        print(self.colors[self.color])
+
         self.iterable_object = iterable_object
         self.iterations_number = len(iterable_object)
         self.task_name = task_name
         self.bar_width = bar_width
-        self.steps_number = steps_number
         self.step = int(self.bar_width / self.steps_number)  # progress step
+        # self.maximum_steps = self.step *
 
         # progress data calculation
         #
@@ -86,8 +87,8 @@ class ColoredMegaBar:
         # excute a progress step; this list defined as progress_points
 
         self.progress_points = [
-            j * (1 / self.steps_number) * int(len(iterable_object))
-            for j in range(1, self.steps_number)
+            int(j * (self.iterations_number / self.steps_number))
+            for j in range(0, self.steps_number)
         ]
 
         # The elapsed_steps attribute is a counter for passed steps
@@ -115,7 +116,10 @@ class ColoredMegaBar:
         title = f'{task_name: ^{title_width}s}'
         top_box = '▄' * self.bar_width + '\n'
         self.header = f'{top_box}▌{emoji}{title}▐'
-        self.footnote = footnote + '\n'
+
+    @property
+    def steps_number(self):
+        return self.bar_width - 2
 
     def get_random_emoji(self):
         '''returning random emoji from emoji collection "klond_art_emojis.txt"'''
@@ -125,14 +129,27 @@ class ColoredMegaBar:
 
         return random_emoji
 
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, user_color_choice):
+        import os
+        if self.colored_bar:
+            self._color = user_color_choice.upper()
+            print(self.colors[self.color], end="", flush=True)
+        else:
+            print('For printing colored megabars pass "colored_bar=True" argument in constructor')
+
     def start(self):
         '''start This method should be placed just before for block
         '''
 
-        from timeit import default_timer as timer
+        import time
 
-        self.start_time = timer()
-        print(f'\n{self.header}', flush=True)
+        self.start_time = time.perf_counter()
+        print(f'{self.header}', flush=True)
         print('▌', end="", flush=True)
 
     def midle(self, i):
@@ -145,9 +162,7 @@ class ColoredMegaBar:
 
         # in folowing if block program determines when to pass one step
         if i in self.progress_points:
-            print('▓' * (self.step),
-                  end="",
-                  flush=True)
+            print('▓' * (self.step), end="", flush=True)
             # whenever a progress step is passed, elapsed_steps counter
             # sholud be ubdated by adding 1 to it
             self.elapsed_steps += 1
@@ -156,11 +171,16 @@ class ColoredMegaBar:
         '''end This method should be placed just after for block
         '''
 
-        from timeit import default_timer as timer
+        import time
 
-        self.stop_time = timer()
-        self.elapsed_time = self.stop_time - self.start_time
-
+        stop_time = time.perf_counter()
+        elapsed_time = stop_time - self.start_time
+        formated_elapsed_time = time.strftime("%M:%S",
+                                              time.gmtime(elapsed_time))
+        elapsed_time_string = f'Elapsed time: {formated_elapsed_time}'
+        footer_time = f'▌{elapsed_time_string: ^{self.bar_width-2}s}▐' 
+        bottom_box = '▀' * self.bar_width
+        footer = footer_time + '\n' + bottom_box
         # It is possible that elapsed steps do not reach desired steps
         # number this is mostly because of integer conversion of
         # progress points
@@ -171,68 +191,47 @@ class ColoredMegaBar:
         # in remained_character, -2 appears for opening and ending characters
 
         remained_character = self.bar_width - self.elapsed_steps * self.step - 2
-        print('▓' * remained_character + '▐',
-              flush=True)
+        print('▓' * remained_character + '▐', flush=True)
 
-        self.remained_steps = self.steps_number - self.elapsed_steps
+        # Printing elapsed time status
+        print(footer, flush=True)
 
-        # Printing progress bar status
-        #
-        # If consumed time by KlondBar be more than 10% of total process
-        # time, a sad status appears
+        if self.colored_bar:
+            print(self.colors['RESET'], end='', flush=True)
 
-        if ((self.total_wasted_time) / (self.elapsed_time) * 100) > 10:
-            print(f'    (ಥ﹏ಥ) progress completed in ' +
-                  f'{self.elapsed_time:.3f}s',
-                  flush=True)
-            print(self.footnote, flush=True)
+    def run(self):
+        self.start()
 
-        # If total process time be greater than expected time, an angry
-        # status appears
-        elif self.elapsed_time > self.expected_time:
-            print('    (╯°□°）╯︵ ┻━┻ Progress completed in {0:.3f}s'.format(
-                self.elapsed_time) + ' it was boring' +
-                  self.colors[self.color],
-                  flush=True)
-            print(self.footnote, flush=True)
+        for counter, item in enumerate(iterable_object):
+            yield item
+            self.midle(counter)
 
-        # In any other condition a heroic status will shows up
-        else:
-            print(f'    ─=≡Σ((( つ◕ل͜◕)つ Progress completed in ' +
-                  f'{self.elapsed_time:.3f}s\n',
-                  flush=True)
-            print(self.footnote, flush=True)
-        print(self.colors['RESET'], end='', flush=True)
+        self.end()
 
 
 ## Debug section
 if __name__ == '__main__':
     import time
     # First construct an iterable_object for using in "for loop"
-    iterable_object = range(50)
+    iterable_object = range(20)
 
     # KlondBar object construction
     # test_bar is an instance of KlondBar class
-    test_bar = ColoredMegaBar(iterable_object,
-                              task_name='task title',
-                              bar_width=80,
-                              footnote='footnote',
-                              steps_number=80,
-                              color='cyan')
+    print('colorless bar test:')
+    test_bar = MegaBar(iterable_object, task_name='task title', bar_width=80)
+    test_bar.color = 'blue'
 
-    print('before start', flush=True)
-
-    # Place start method before "for loop"; don't pass any argument to it
-    test_bar.start()
-    for i in iterable_object:
-        # Place midle method after "for loop" definition,
-        # pass "for loop" iterator to midle method. like this:
-        test_bar.midle(i)
-
+    for i in test_bar.run():
         # place your calculations here
         time.sleep(0.1)  # any calculation you need
 
-    # Place end method after "for loop" block, don't pass any argument to it
-    test_bar.end()
+    print('colored bar test:')
+    colored_test_bar = MegaBar(iterable_object,
+                               task_name='task title',
+                               bar_width=40,
+                               colored_bar=True)
+    colored_test_bar.color = 'cyan'
 
-    print('after end', flush=True)
+    for i in colored_test_bar.run():
+        # place your calculations here
+        time.sleep(0.1)  # any calculation you need
