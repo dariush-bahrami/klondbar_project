@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="klondbar",
-    version="0.1.2",
+    version="0.1.3",
     author="dAriush Bahrami",
     author_email="dariush.bahrami@ut.ac.ir",
     description="A simple progress bar with lots of customization \(^-^)/",

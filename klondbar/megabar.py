@@ -13,8 +13,8 @@ class MegaBar:
     def __init__(self,
                  iterable_object,
                  task_name='',
-                 bar_width=40,
-                 colored_bar=False):
+                 bar_width=60,
+                 color=None):
         '''__init__ MegaBar class constructor
 
         Parameters
@@ -25,7 +25,7 @@ class MegaBar:
             progress title, by default ''
         bar_width : int, optional
             width of the bar, by default 40
-        colored_bar : bool, optional
+        color : str, optional
         '''
         import os
 
@@ -59,16 +59,24 @@ class MegaBar:
         self.bottom_margin_character = '▀'
         self.progress_character = '█'
 
-        self.colored_bar = colored_bar
-        if self.colored_bar:
-            self._color = 'GREEN'  # Default color
+        if color != None:
+            if type(color) != str:
+                raise TypeError('Pass color as str object')
+
+            if color.upper() not in self.colors:
+                raise ValueError('Invalid color name')
+
             os.system("")  # allows you to print ANSI codes in the Terminal
+            self._color = color.upper()
             print(self.colors[self._color], end="", flush=True)
+
+        else:
+            self._color = None
 
         self.iterable_object = iterable_object
         self.iterations_number = len(iterable_object)
-        self.task_name = task_name
-        self.bar_width = bar_width
+        self.task_name = (str(task_name)).strip()
+        self.bar_width = int(bar_width)
         # number of printed characters in each step
         self.step = int(self.bar_width / self.steps_number)
 
@@ -91,7 +99,7 @@ class MegaBar:
         emoji_width = int(self.bar_width * 0.4) - 1  # -1 for opening character
         title_width = int(self.bar_width * 0.6) - 1  # -1 for ending character
         emoji = f'{self.get_random_emoji(): ^{emoji_width}s}'
-        title = f'{task_name: ^{title_width}s}'
+        title = f'{self.task_name: ^{title_width}s}'
         top_box = self.top_margin_character * self.bar_width
         self.header = '{0}\n{1}{2}{3}{4}'.format(
             top_box, self.opening_character, emoji, title, self.closing_character)
@@ -114,12 +122,29 @@ class MegaBar:
     @color.setter
     def color(self, user_color_choice):
         import os
-        if self.colored_bar:
-            self._color = user_color_choice.upper()
-            print(self.colors[self.color], end="", flush=True)
+        if user_color_choice != None:
+            if type(user_color_choice) != str:
+                raise TypeError('Pass color as str object')
+
+            if self._color != None:
+                if user_color_choice.upper() not in self.colors:
+                    raise ValueError('Invalid color name')
+
+                self._color = user_color_choice.upper()
+                print(self.colors[self._color], end="", flush=True)
+
+            else:
+                if user_color_choice.upper() not in self.colors:
+                    raise ValueError('Invalid color name')
+
+                os.system("")  # allows you to print ANSI codes in the Terminal
+                self._color = user_color_choice.upper()
+                print(self.colors[self._color], end="", flush=True)
+
         else:
-            message = 'Before color assignment set colored_bar attribute as True'
-            print(message, flush=True)
+            if self._color != None:
+                self._color = None
+                print(self.colors['RESET'], end="", flush=True)
 
     def start(self):
         import time
@@ -162,7 +187,7 @@ class MegaBar:
         print(footer, flush=True)
 
         # Resetting color of terminal
-        if self.colored_bar:
+        if self.color != None:
             print(self.colors['RESET'], end='', flush=True)
 
     def run(self):
@@ -175,7 +200,7 @@ class MegaBar:
         self.end()
 
 
-def mega_bar(iterable_object, title='', bar_width=40, color=None):
+def mega_bar(iterable_object, title='', bar_width=60, color=None):
     """just wrap for loop sequence with mega_bar
 
     Parameters
@@ -194,11 +219,6 @@ def mega_bar(iterable_object, title='', bar_width=40, color=None):
     items in iterable_objects
         a generator which returns items in iterable_objects
     """
-    if color != None:
-        bar = MegaBar(iterable_object, task_name=title,
-                    bar_width=bar_width, colored_bar=True)
-        bar.color = color
-    else:
-        bar = MegaBar(iterable_object, task_name=title,
-                    bar_width=bar_width)
+    bar = MegaBar(iterable_object, task_name=title,
+                  bar_width=bar_width, color=color)
     return bar.run()

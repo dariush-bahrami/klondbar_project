@@ -21,6 +21,13 @@ def micro_bar(iterable_object, title="", bar_length=40):
     file = sys.stdout
     iterations = len(iterable_object)
 
+    # Arguments Preprocess
+    title = str(title)
+    if len(title) != 0:
+        title = title.strip() + ': '
+
+    bar_length = int(bar_length)
+
     def update_bar(current_step):
         progressed_steps = int(current_step * (bar_length / iterations))
         progress_character = '#'
@@ -34,7 +41,7 @@ def micro_bar(iterable_object, title="", bar_length=40):
         elapsed_time = step_time - start_time
         elapsed_time_string = time.strftime("%M:%S", time.gmtime(elapsed_time))
 
-        bar_string = '{0}[{1}{2}] {3}/{4} Elapsed time: {5}'.format(
+        bar_string = '{0}[{1}{2}] {3}/{4} elapsed time: {5}'.format(
             title, progressed_steps_string, remained_steps_string,
             current_step, iterations, elapsed_time_string)
 
@@ -52,4 +59,3 @@ def micro_bar(iterable_object, title="", bar_length=40):
 
     file.write("\n")
     file.flush()
-    
