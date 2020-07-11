@@ -14,7 +14,8 @@ class MegaBar:
                  iterable_object,
                  task_name='',
                  bar_width=60,
-                 color=None):
+                 color=None,
+                 iterations_number='auto'):
         '''__init__ MegaBar class constructor
 
         Parameters
@@ -74,7 +75,12 @@ class MegaBar:
             self._color = None
 
         self.iterable_object = iterable_object
-        self.iterations_number = len(iterable_object)
+
+        if iterations_number == 'auto':
+            self.iterations_number = len(iterable_object)
+        else:
+            self.iterations_number = iterations_number
+
         self.task_name = (str(task_name)).strip()
         self.bar_width = int(bar_width)
         # number of printed characters in each step
@@ -200,7 +206,8 @@ class MegaBar:
         self.end()
 
 
-def mega_bar(iterable_object, title='', bar_width=60, color=None):
+def mega_bar(iterable_object, title='',
+             bar_width=60, color=None, iterations='auto'):
     """just wrap for loop sequence with mega_bar
 
     Parameters
@@ -219,6 +226,6 @@ def mega_bar(iterable_object, title='', bar_width=60, color=None):
     items in iterable_objects
         a generator which returns items in iterable_objects
     """
-    bar = MegaBar(iterable_object, task_name=title,
+    bar = MegaBar(iterable_object,iterations_number=iterations, task_name=title,
                   bar_width=bar_width, color=color)
     return bar.run()
