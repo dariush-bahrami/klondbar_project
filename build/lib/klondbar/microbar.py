@@ -1,4 +1,5 @@
-def micro_bar(iterable_object, title="", bar_length=40):
+def micro_bar(iterable_object, title="", bar_length=40,
+              iterations_number='auto'):
     """just wrap for loop sequence with micro_bar
 
     Parameters
@@ -19,7 +20,11 @@ def micro_bar(iterable_object, title="", bar_length=40):
 
     start_time = time.perf_counter()
     file = sys.stdout
-    iterations = len(iterable_object)
+
+    if iterations_number == 'auto':
+        iterations = len(iterable_object)
+    else:
+        iterations = iterations_number 
 
     # Arguments Preprocess
     title = str(title)
